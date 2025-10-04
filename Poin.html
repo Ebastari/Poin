@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profil Forester 🌲</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome 6 -->
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e0f2f7, #c1e4ee); /* Warna latar lebih cerah */
+    color: #2d6a4f; /* Warna teks utama */
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    margin: 20px auto;
+    padding: 25px;
+    background: #ffffff;
+    width: 90%;
+    max-width: 480px; /* Lebar maksimum yang disesuaikan */
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  .profile-pic-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+  }
+
+  .profile img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #52b788; /* Border lebih tebal */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .profile img:hover {
+    transform: scale(1.05);
+  }
+
+  .profile-info {
+    margin-bottom: 15px;
+  }
+
+  .profile-info h2 {
+    font-size: 1.6em;
+    color: #2e7d32;
+    margin: 5px 0 2px 0;
+    font-weight: 700;
+  }
+
+  .profile-info p {
+    font-size: 1.1em;
+    color: #555;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .level-badge {
+    font-size: 1.4em; /* Ukuran font level lebih besar */
+    padding: 10px 25px;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #74c69d, #40916c);
+    color: white;
+    font-weight: 700; /* Lebih tebal */
+    margin: 15px 0 10px 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    animation: pulse 1.5s infinite alternate;
+  }
+
+  @keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.03); }
+  }
+
+  .greeting-forester {
+    font-size: 1.1em;
+    color: #388a6d; /* Warna teks yang lebih menarik */
+    margin-bottom: 20px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  .time-progress-section {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+
+  .time {
+    font-size: 1.05em;
+    color: #4CAF50; /* Warna waktu aktif */
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  progress {
+    width: 90%;
+    height: 14px; /* Tinggi progress bar */
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    overflow: hidden;
+  }
+
+  progress::-webkit-progress-bar {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+  }
+
+  progress::-webkit-progress-value {
+    background: linear-gradient(to right, #81c784, #4CAF50); /* Gradient untuk progress */
+    border-radius: 10px;
+  }
+
+  progress::-moz-progress-bar {
+    background: linear-gradient(to right, #81c784, #4CAF50);
+    border-radius: 10px;
+  }
+
+  .levels {
+    text-align: left;
+    margin-top: 20px;
+    width: 90%;
+  }
+
+  .level-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Memastikan vertikal tengah */
+    padding: 10px 15px;
+    background: #f0fdf4; /* Latar item level lebih terang */
+    border-radius: 12px;
+    margin: 8px 0;
+    font-size: 0.95em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .level-item:hover {
+    background: #e6f9ed;
+  }
+
+  .level-item span:first-child {
+    font-weight: 600;
+    color: #2e7d32; /* Warna teks level */
+    display: flex;
+    align-items: center;
+  }
+
+  .level-item span:last-child {
+    font-weight: 500;
+    color: #555;
+    text-align: right; /* Agar teks deskripsi waktu rata kanan */
+  }
+
+  .level-item i {
+    margin-right: 8px;
+    font-size: 1.1em;
+    color: #4CAF50;
+  }
+
+  /* Dropdown untuk Edit Section */
+  .edit-dropdown-toggle {
+    background: #eaf7ed;
+    color: #40916c;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.05em;
+    font-weight: 600;
+    margin-top: 25px;
+    width: 90%;
+    max-width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+
+  .edit-dropdown-toggle:hover {
+    background: #d8f3e2;
+    transform: translateY(-2px);
+  }
+
+  .edit-dropdown-toggle i {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+  }
+
+  .edit-dropdown-toggle.active i {
+    transform: rotate(180deg);
+  }
+
+  .edit-section {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    background: #fdfdfd;
+    border-radius: 15px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+    padding: 0 10px;
+    margin-top: 15px;
+    width: 90%;
+    max-width: 480px;
+  }
+
+  .edit-section.active {
+    max-height: 500px; /* Sesuaikan dengan tinggi maksimum konten edit */
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .edit-section input,
+  .edit-section button {
+    display: block;
+    margin: 10px auto;
+    padding: 12px;
+    width: 85%;
+    max-width: 350px;
+    border: 1px solid #b7e4c7;
+    border-radius: 10px;
+    font-size: 1em;
+    color: #333;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  .edit-section input::placeholder {
+    color: #888;
+  }
+
+  .edit-section input:focus {
+    border-color: #52b788;
+    outline: none;
+    box-shadow: 0 0 5px rgba(82, 183, 136, 0.3);
+  }
+
+  .file-input-label {
+    background: #eaf7ed;
+    color: #40916c;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px auto;
+    width: 85%;
+    max-width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    transition: background 0.3s ease;
+  }
+
+  .file-input-label:hover {
+    background: #d8f3e2;
+  }
+
+  .file-input-label input[type="file"] {
+    display: none;
+  }
+
+  .file-input-label i {
+    margin-right: 8px;
+  }
+
+  .save-btn {
+    background: linear-gradient(90deg, #40916c, #52b788);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+
+  .save-btn:hover {
+    background: linear-gradient(90deg, #327357, #40916c);
+    transform: translateY(-2px);
+  }
+
+  footer {
+    margin-top: 40px;
+    padding: 20px;
+    color: #888;
+    font-size: 0.8em;
+  }
+</style>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="profile">
+      <div class="profile-pic-wrapper">
+        <img id="profilePic" src="https://i.ibb.co/NKmqRb7/forest-avatar.png" alt="Foto Profil">
+      </div>
+      <div class="profile-info">
+        <h2 id="profileName">Nama Pengguna</h2>
+        <p id="profileRole">Jabatan Pengguna</p>
+      </div>
+      
+      <div id="levelBadge" class="level-badge">Tumbuhan Bawah</div>
+      
+      <div class="greeting-forester">
+        Hai Forester, Tingkatkan Keaktifanmu di aplikasi Manajemen Integrated Nursery dan Rawat Pohonmu dengan Penuh Cinta.
+      </div>
+    </div>
+
+    <div class="time-progress-section">
+      <div class="time" id="activeTime">Waktu Aktif: 0 hari, 0 jam, 0 menit, 0 detik</div>
+      <progress id="progressBar" value="0" max="120"></progress>
+    </div>
+
+    <div class="levels">
+      <div class="level-item" id="levelTumbuhanBawah"><span><i class="fas fa-seedling"></i> Tumbuhan Bawah:</span> <span class="level-time-desc"></span></div>
+      <div class="level-item" id="levelSemai"><span><i class="fas fa-leaf"></i> Semai:</span> <span class="level-time-desc"></span></div>
+      <div class="level-item" id="levelPancang"><span><i class="fas fa-tree"></i> Pancang:</span> <span class="level-time-desc"></span></div>
+      <div class="level-item" id="levelTiang"><span><i class="fas fa-tree-deciduous"></i> Tiang:</span> <span class="level-time-desc"></span></div>
+      <div class="level-item" id="levelPohon"><span><i class="fas fa-mountain"></i> Pohon:</span> <span class="level-time-desc"></span></div>
+    </div>
+
+    <!-- Dropdown Toggle untuk Edit Section -->
+    <button class="edit-dropdown-toggle" onclick="toggleEditSection()">
+      <i class="fas fa-edit"></i> Edit Profil <i class="fas fa-chevron-down dropdown-icon"></i>
+    </button>
+
+    <div class="edit-section" id="editProfileSection">
+      <input id="name" placeholder="Nama Anda">
+      <input id="role" placeholder="Jabatan">
+      <input id="email" placeholder="Alamat Email">
+      <input id="phone" placeholder="Nomor HP">
+      <label for="photoUpload" class="file-input-label"><i class="fas fa-camera"></i> Ganti Foto Profil</label>
+      <input type="file" id="photoUpload" accept="image/*">
+      <button class="save-btn" onclick="saveProfile()">💾 Simpan Profil</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2023 Forester App. All rights reserved.</p>
+  </footer>
+
+<script>
+// Pastikan Font Awesome CSS dimuat, menggunakan versi 6 yang lebih baru
+// const faScript = document.createElement('script');
+// faScript.src = "https://kit.fontawesome.com/a076d05399.js"; // Ganti dengan link Font Awesome kit Anda jika ada
+// faScript.crossOrigin = "anonymous";
+// document.head.appendChild(faScript);
+
+let startTime = localStorage.getItem("startTime");
+if (!startTime) {
+  startTime = Date.now();
+  localStorage.setItem("startTime", startTime);
+}
+
+const levelThresholds = {
+  "Tumbuhan Bawah": { minMinutes: 0, maxMinutes: 9, icon: "fas fa-seedling" },
+  "Semai": { minMinutes: 10, maxMinutes: 29, icon: "fas fa-leaf" },
+  "Pancang": { minMinutes: 30, maxMinutes: 59, icon: "fas fa-tree" },
+  "Tiang": { minMinutes: 60, maxMinutes: 119, icon: "fas fa-tree-deciduous" }, // Menggunakan ikon yang sedikit berbeda
+  "Pohon": { minMinutes: 120, maxMinutes: Infinity, icon: "fas fa-mountain" }
+};
+
+function formatTime(minutes) {
+    const totalSeconds = minutes * 60;
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const mins = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+    
+    let parts = [];
+    if (days > 0) parts.push(`${days} hari`);
+    if (hours > 0) parts.push(`${hours} jam`);
+    if (mins > 0) parts.push(`${mins} menit`);
+    if (parts.length === 0 || (parts.length === 1 && mins === 0 && secs > 0)) parts.push(`${secs} detik`); // Jika hanya detik
+    
+    return parts.join(', ');
+}
+
+
+function updateActiveTime() {
+  const now = Date.now();
+  const elapsed = Math.floor((now - startTime) / 1000); // dalam detik
+  const days = Math.floor(elapsed / 86400);
+  const hours = Math.floor((elapsed % 86400) / 3600);
+  const minutes = Math.floor((elapsed % 3600) / 60);
+  const seconds = elapsed % 60;
+
+  document.getElementById("activeTime").textContent =
+    `Waktu Aktif: ${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik`;
+
+  const progressValue = Math.min(minutes, 120);
+  document.getElementById("progressBar").value = progressValue;
+
+  let currentLevel = "Tumbuhan Bawah";
+  if (minutes >= 120) currentLevel = "Pohon";
+  else if (minutes >= 60) currentLevel = "Tiang";
+  else if (minutes >= 30) currentLevel = "Pancang";
+  else if (minutes >= 10) currentLevel = "Semai";
+
+  document.getElementById("levelBadge").textContent = currentLevel;
+
+  // Update deskripsi waktu untuk setiap level item
+  document.getElementById("levelTumbuhanBawah").querySelector(".level-time-desc").textContent = `< 10 menit (Anda ${minutes} menit di level ini)`;
+  if (currentLevel === "Tumbuhan Bawah" && minutes < levelThresholds["Semai"].minMinutes) {
+    const remaining = levelThresholds["Semai"].minMinutes - minutes;
+    document.getElementById("levelTumbuhanBawah").querySelector(".level-time-desc").textContent = `< 10 menit (${remaining} menit lagi ke Semai)`;
+  } else if (currentLevel !== "Tumbuhan Bawah") {
+    document.getElementById("levelTumbuhanBawah").querySelector(".level-time-desc").textContent = `< 10 menit (Telah terlewati)`;
+  }
+
+  if (minutes >= levelThresholds["Semai"].minMinutes && minutes < levelThresholds["Pancang"].minMinutes) {
+    const remaining = levelThresholds["Pancang"].minMinutes - minutes;
+    document.getElementById("levelSemai").querySelector(".level-time-desc").textContent = `≥ 10 menit (${remaining} menit lagi ke Pancang)`;
+  } else if (minutes < levelThresholds["Semai"].minMinutes) {
+    document.getElementById("levelSemai").querySelector(".level-time-desc").textContent = `≥ 10 menit`;
+  } else {
+    document.getElementById("levelSemai").querySelector(".level-time-desc").textContent = `≥ 10 menit (Telah terlewati)`;
+  }
+  
+  if (minutes >= levelThresholds["Pancang"].minMinutes && minutes < levelThresholds["Tiang"].minMinutes) {
+    const remaining = levelThresholds["Tiang"].minMinutes - minutes;
+    document.getElementById("levelPancang").querySelector(".level-time-desc").textContent = `≥ 30 menit (${remaining} menit lagi ke Tiang)`;
+  } else if (minutes < levelThresholds["Pancang"].minMinutes) {
+    document.getElementById("levelPancang").querySelector(".level-time-desc").textContent = `≥ 30 menit`;
+  } else {
+    document.getElementById("levelPancang").querySelector(".level-time-desc").textContent = `≥ 30 menit (Telah terlewati)`;
+  }
+
+  if (minutes >= levelThresholds["Tiang"].minMinutes && minutes < levelThresholds["Pohon"].minMinutes) {
+    const remaining = levelThresholds["Pohon"].minMinutes - minutes;
+    document.getElementById("levelTiang").querySelector(".level-time-desc").textContent = `≥ 60 menit (${remaining} menit lagi ke Pohon)`;
+  } else if (minutes < levelThresholds["Tiang"].minMinutes) {
+    document.getElementById("levelTiang").querySelector(".level-time-desc").textContent = `≥ 60 menit`;
+  } else {
+    document.getElementById("levelTiang").querySelector(".level-time-desc").textContent = `≥ 60 menit (Telah terlewati)`;
+  }
+
+  if (minutes >= levelThresholds["Pohon"].minMinutes) {
+    document.getElementById("levelPohon").querySelector(".level-time-desc").textContent = `≥ 120 menit (Anda di level tertinggi!)`;
+  } else {
+    document.getElementById("levelPohon").querySelector(".level-time-desc").textContent = `≥ 120 menit`;
+  }
+
+
+  // Menyoroti level saat ini
+  document.querySelectorAll('.level-item').forEach(item => {
+    item.style.backgroundColor = '#f0fdf4'; // Reset warna
+    item.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+  });
+
+  const activeLevelElement = document.getElementById(`level${currentLevel.replace(/\s/g, '')}`);
+  if (activeLevelElement) {
+    activeLevelElement.style.backgroundColor = '#d8f3e2'; // Warna latar yang menyorot
+    activeLevelElement.style.boxShadow = '0 4px 10px rgba(64,145,108,0.2)';
+  }
+}
+
+setInterval(updateActiveTime, 1000);
+
+function saveProfile() {
+  const name = document.getElementById("name").value;
+  const role = document.getElementById("role").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
+  
+  const data = { name, role, email, phone };
+  localStorage.setItem("profileData", JSON.stringify(data));
+
+  // Update tampilan nama dan jabatan di profil
+  document.getElementById("profileName").textContent = name || "Nama Pengguna";
+  document.getElementById("profileRole").textContent = role || "Jabatan Pengguna";
+  
+  alert("Profil berhasil disimpan 🌿");
+}
+
+function loadProfile() {
+  const savedData = JSON.parse(localStorage.getItem("profileData") || "{}");
+  document.getElementById("name").value = savedData.name || "";
+  document.getElementById("role").value = savedData.role || "";
+  document.getElementById("email").value = savedData.email || "";
+  document.getElementById("phone").value = savedData.phone || "";
+
+  document.getElementById("profileName").textContent = savedData.name || "Nama Pengguna";
+  document.getElementById("profileRole").textContent = savedData.role || "Jabatan Pengguna";
+
+  const savedPhoto = localStorage.getItem("profilePic");
+  if (savedPhoto) document.getElementById("profilePic").src = savedPhoto;
+}
+
+document.getElementById("photoUpload").addEventListener("change", e => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    document.getElementById("profilePic").src = reader.result;
+    localStorage.setItem("profilePic", reader.result);
+  };
+  if (file) reader.readAsDataURL(file);
+});
+
+// Fungsi untuk toggle dropdown edit section
+function toggleEditSection() {
+  const editSection = document.getElementById('editProfileSection');
+  const toggleButton = document.querySelector('.edit-dropdown-toggle');
+  editSection.classList.toggle('active');
+  toggleButton.classList.toggle('active');
+}
+
+// Panggil fungsi saat halaman dimuat
+loadProfile();
+updateActiveTime();
+</script>
+</body>
+</html>
