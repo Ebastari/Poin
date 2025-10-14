@@ -3,544 +3,327 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profil Forester 🌲</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome 6 -->
+<title>Montana AI – Smart Land Reclamation</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #e0f2f7, #c1e4ee); /* Warna latar lebih cerah */
-    color: #2d6a4f; /* Warna teks utama */
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+:root {
+  --primary-green: #4CAF50;
+  --dark-green: #388E3C;
+  --light-green: #E8F5E9;
+  --accent-green: #66BB6A;
+  --text-dark: #1B1B1B;
+}
 
-  .container {
-    margin: 20px auto;
-    padding: 25px;
-    background: #ffffff;
-    width: 90%;
-    max-width: 480px; /* Lebar maksimum yang disesuaikan */
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    animation: fadeIn 0.8s ease-out;
-  }
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--text-dark);
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+.slider-container {
+  position: relative;
+  width: 90%;
+  max-width: 950px;
+  height: 90vh;
+  overflow: hidden;
+  border-radius: 25px;
+  background: #fff;
+  box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+}
 
-  .profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 25px;
-  }
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 1s ease, transform 1s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(120deg, var(--light-green), #f5fff5);
+}
 
-  .profile-pic-wrapper {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    margin-bottom: 15px;
-  }
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 2;
+}
 
-  .profile img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid #52b788; /* Border lebih tebal */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease-in-out;
-  }
+.slide img {
+  max-width: 180px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
 
-  .profile img:hover {
-    transform: scale(1.05);
-  }
+h1 {
+  color: var(--dark-green);
+  font-size: 2em;
+  margin-bottom: 10px;
+}
 
-  .profile-info {
-    margin-bottom: 15px;
-  }
+p {
+  max-width: 750px;
+  font-size: 1.05em;
+  line-height: 1.6em;
+  color: #333;
+}
 
-  .profile-info h2 {
-    font-size: 1.6em;
-    color: #2e7d32;
-    margin: 5px 0 2px 0;
-    font-weight: 700;
-  }
+.nav-buttons {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+}
 
-  .profile-info p {
-    font-size: 1.1em;
-    color: #555;
-    margin: 0;
-    font-weight: 500;
-  }
+.btn {
+  background-color: var(--primary-green);
+  border: none;
+  padding: 10px 18px;
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
-  .level-badge {
-    font-size: 1.4em; /* Ukuran font level lebih besar */
-    padding: 10px 25px;
-    border-radius: 30px;
-    background: linear-gradient(90deg, #74c69d, #40916c);
-    color: white;
-    font-weight: 700; /* Lebih tebal */
-    margin: 15px 0 10px 0;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-    animation: pulse 1.5s infinite alternate;
-  }
+.btn:hover { background-color: var(--dark-green); transform: scale(1.05); }
 
-  @keyframes pulse {
-    from { transform: scale(1); }
-    to { transform: scale(1.03); }
-  }
+.indicator {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
 
-  .greeting-forester {
-    font-size: 1.1em;
-    color: #388a6d; /* Warna teks yang lebih menarik */
-    margin-bottom: 20px;
-    line-height: 1.5;
-    font-weight: 500;
-  }
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #c8e6c9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
-  .time-progress-section {
-    width: 100%;
-    margin-bottom: 25px;
-  }
+.dot.active {
+  background-color: var(--dark-green);
+  transform: scale(1.2);
+}
 
-  .time {
-    font-size: 1.05em;
-    color: #4CAF50; /* Warna waktu aktif */
-    margin-bottom: 10px;
-    font-weight: 600;
-  }
+/* ===== Kartu fitur di slide kedua ===== */
+.feature-card {
+  width: 90%;
+  max-width: 600px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 25px 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  animation: fadeIn 0.8s ease;
+}
 
-  progress {
-    width: 90%;
-    height: 14px; /* Tinggi progress bar */
-    border-radius: 10px;
-    background-color: #e0e0e0;
-    -webkit-appearance: none;
-    appearance: none;
-    border: none;
-    overflow: hidden;
-  }
+.feature-card.active {
+  display: flex;
+}
 
-  progress::-webkit-progress-bar {
-    background-color: #e0e0e0;
-    border-radius: 10px;
-  }
+.feature-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
 
-  progress::-webkit-progress-value {
-    background: linear-gradient(to right, #81c784, #4CAF50); /* Gradient untuk progress */
-    border-radius: 10px;
-  }
+.feature-card h2 {
+  color: var(--dark-green);
+  font-size: 1.3em;
+  margin-bottom: 8px;
+  text-align: center;
+}
 
-  progress::-moz-progress-bar {
-    background: linear-gradient(to right, #81c784, #4CAF50);
-    border-radius: 10px;
-  }
+.feature-card p {
+  color: #333;
+  font-size: 1em;
+  line-height: 1.5em;
+}
 
-  .levels {
-    text-align: left;
-    margin-top: 20px;
-    width: 90%;
-  }
+.feature-nav {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 
-  .level-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Memastikan vertikal tengah */
-    padding: 10px 15px;
-    background: #f0fdf4; /* Latar item level lebih terang */
-    border-radius: 12px;
-    margin: 8px 0;
-    font-size: 0.95em;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .level-item:hover {
-    background: #e6f9ed;
-  }
-
-  .level-item span:first-child {
-    font-weight: 600;
-    color: #2e7d32; /* Warna teks level */
-    display: flex;
-    align-items: center;
-  }
-
-  .level-item span:last-child {
-    font-weight: 500;
-    color: #555;
-    text-align: right; /* Agar teks deskripsi waktu rata kanan */
-  }
-
-  .level-item i {
-    margin-right: 8px;
-    font-size: 1.1em;
-    color: #4CAF50;
-  }
-
-  /* Dropdown untuk Edit Section */
-  .edit-dropdown-toggle {
-    background: #eaf7ed;
-    color: #40916c;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 1.05em;
-    font-weight: 600;
-    margin-top: 25px;
-    width: 90%;
-    max-width: 350px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    transition: background 0.3s ease, transform 0.3s ease;
-  }
-
-  .edit-dropdown-toggle:hover {
-    background: #d8f3e2;
-    transform: translateY(-2px);
-  }
-
-  .edit-dropdown-toggle i {
-    margin-left: 10px;
-    transition: transform 0.3s ease;
-  }
-
-  .edit-dropdown-toggle.active i {
-    transform: rotate(180deg);
-  }
-
-  .edit-section {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-out;
-    background: #fdfdfd;
-    border-radius: 15px;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
-    padding: 0 10px;
-    margin-top: 15px;
-    width: 90%;
-    max-width: 480px;
-  }
-
-  .edit-section.active {
-    max-height: 500px; /* Sesuaikan dengan tinggi maksimum konten edit */
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-
-  .edit-section input,
-  .edit-section button {
-    display: block;
-    margin: 10px auto;
-    padding: 12px;
-    width: 85%;
-    max-width: 350px;
-    border: 1px solid #b7e4c7;
-    border-radius: 10px;
-    font-size: 1em;
-    color: #333;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-  }
-
-  .edit-section input::placeholder {
-    color: #888;
-  }
-
-  .edit-section input:focus {
-    border-color: #52b788;
-    outline: none;
-    box-shadow: 0 0 5px rgba(82, 183, 136, 0.3);
-  }
-
-  .file-input-label {
-    background: #eaf7ed;
-    color: #40916c;
-    padding: 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin: 10px auto;
-    width: 85%;
-    max-width: 350px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-    transition: background 0.3s ease;
-  }
-
-  .file-input-label:hover {
-    background: #d8f3e2;
-  }
-
-  .file-input-label input[type="file"] {
-    display: none;
-  }
-
-  .file-input-label i {
-    margin-right: 8px;
-  }
-
-  .save-btn {
-    background: linear-gradient(90deg, #40916c, #52b788);
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 15px;
-    font-weight: 600;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-  }
-
-  .save-btn:hover {
-    background: linear-gradient(90deg, #327357, #40916c);
-    transform: translateY(-2px);
-  }
-
-  footer {
-    margin-top: 40px;
-    padding: 20px;
-    color: #888;
-    font-size: 0.8em;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 </style>
 </head>
 <body>
-  
-  <div class="container">
-    <div class="profile">
-      <div class="profile-pic-wrapper">
-        <img id="profilePic" src="https://i.ibb.co/NKmqRb7/forest-avatar.png" alt="Foto Profil">
-      </div>
-      <div class="profile-info">
-        <h2 id="profileName">Nama Pengguna</h2>
-        <p id="profileRole">Jabatan Pengguna</p>
-      </div>
-      
-      <div id="levelBadge" class="level-badge">Tumbuhan Bawah</div>
-      
-      <div class="greeting-forester">
-        Hai Forester, Tingkatkan Keaktifanmu di aplikasi Manajemen Integrated Nursery dan Rawat Pohonmu dengan Penuh Cinta.
-      </div>
+
+<div class="slider-container" id="slider">
+
+  <!-- Slide 1 -->
+  <div class="slide active">
+    <img src="https://cdn-icons-png.flaticon.com/512/2721/2721298.png" alt="AI Plant Icon">
+    <h1>Montana AI</h1>
+    <p><strong>Artificial Intelligence for Smart Land Reclamation</strong> – platform digital cerdas untuk mendukung pengelolaan nursery, pemantauan tanaman, dan reklamasi lahan berbasis data secara real-time.</p>
+  </div>
+
+  <!-- Slide 2 (Fitur & Fungsi) -->
+  <div class="slide">
+    <h1>Fungsi dan Fitur Utama</h1>
+    <div class="feature-card active">
+      <img src="https://cdn-icons-png.flaticon.com/512/2909/2909758.png" alt="Manajemen Bibit">
+      <h2>Manajemen Bibit Terpadu</h2>
+      <p>Mengelola data bibit, stok, dan distribusi secara otomatis melalui integrasi dengan <strong>AppSheet</strong> dan <strong>Google Sheets</strong>, memastikan efisiensi data dan keakuratan realisasi di lapangan.</p>
     </div>
 
-    <div class="time-progress-section">
-      <div class="time" id="activeTime">Waktu Aktif: 0 hari, 0 jam, 0 menit, 0 detik</div>
-      <progress id="progressBar" value="0" max="120"></progress>
+    <div class="feature-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/4272/4272781.png" alt="Pemantauan Kondisi">
+      <h2>Pemantauan Kondisi Tanaman</h2>
+      <p>Memberikan data visual dan numerik terkait pertumbuhan tanaman melalui <strong>kamera analisis Montana V2</strong> serta sensor pengukur tinggi otomatis untuk akurasi tinggi di lapangan.</p>
     </div>
 
-    <div class="levels">
-      <div class="level-item" id="levelTumbuhanBawah"><span><i class="fas fa-seedling"></i> Tumbuhan Bawah:</span> <span class="level-time-desc"></span></div>
-      <div class="level-item" id="levelSemai"><span><i class="fas fa-leaf"></i> Semai:</span> <span class="level-time-desc"></span></div>
-      <div class="level-item" id="levelPancang"><span><i class="fas fa-tree"></i> Pancang:</span> <span class="level-time-desc"></span></div>
-      <div class="level-item" id="levelTiang"><span><i class="fas fa-tree-deciduous"></i> Tiang:</span> <span class="level-time-desc"></span></div>
-      <div class="level-item" id="levelPohon"><span><i class="fas fa-mountain"></i> Pohon:</span> <span class="level-time-desc"></span></div>
+    <div class="feature-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/2038/2038874.png" alt="Analisis Daun AI">
+      <h2>Analisis Kesehatan Daun Berbasis AI</h2>
+      <p>Menggunakan teknologi <em>image recognition</em> untuk mendeteksi tingkat kesehatan daun secara cepat, mendukung pengambilan keputusan terhadap tindakan pemeliharaan tanaman.</p>
     </div>
 
-    <!-- Dropdown Toggle untuk Edit Section -->
-    <button class="edit-dropdown-toggle" onclick="toggleEditSection()">
-      <i class="fas fa-edit"></i> Edit Profil <i class="fas fa-chevron-down dropdown-icon"></i>
-    </button>
+    <div class="feature-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/6062/6062646.png" alt="Chatbot AI">
+      <h2>Pelaporan Digital dan Chatbot AI</h2>
+      <p><strong>Chatbot Montana AI</strong> bertindak sebagai asisten cerdas yang mampu memberikan laporan harian, menjawab pertanyaan pengguna, dan memberikan rekomendasi berbasis data.</p>
+    </div>
 
-    <div class="edit-section" id="editProfileSection">
-      <input id="name" placeholder="Nama Anda">
-      <input id="role" placeholder="Jabatan">
-      <input id="email" placeholder="Alamat Email">
-      <input id="phone" placeholder="Nomor HP">
-      <label for="photoUpload" class="file-input-label"><i class="fas fa-camera"></i> Ganti Foto Profil</label>
-      <input type="file" id="photoUpload" accept="image/*">
-      <button class="save-btn" onclick="saveProfile()">💾 Simpan Profil</button>
+    <div class="feature-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/3462/3462637.png" alt="Geospasial Cuaca">
+      <h2>Integrasi Geospasial dan Cuaca</h2>
+      <p>Menghubungkan <strong>peta rencana penanaman (Google Earth)</strong>, data realisasi (<strong>ArcGIS</strong>), dan prakiraan cuaca (<strong>MSN Weather</strong>) untuk mendukung keputusan lapangan berbasis lokasi aktual.</p>
+    </div>
+
+    <div class="feature-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png" alt="Logbook">
+      <h2>Logbook Digital dan Dokumen Pendukung</h2>
+      <p>Menyediakan akses cepat terhadap <strong>Logbook Bibit</strong>, <strong>Logbook Pestisida</strong>, dan <strong>Dokumen RR</strong> dalam format digital untuk memperkuat dokumentasi dan transparansi.</p>
+    </div>
+
+    <!-- Tombol dalam kartu -->
+    <div class="feature-nav">
+      <button class="btn" id="prevFeature">← Sebelumnya</button>
+      <button class="btn" id="nextFeature">Selanjutnya →</button>
     </div>
   </div>
 
-  <footer>
-    <p>&copy; 2023 Forester App. All rights reserved.</p>
-  </footer>
+  <!-- Slide 3 -->
+  <div class="slide">
+    <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" alt="User Level Icon">
+    <h1>Sistem Keaktifan Pengguna</h1>
+    <p>Aktivitas pengguna menambah poin dan meningkatkan level pertumbuhan dari <strong>Semai → Pancang → Tiang → Pohon → Rimba</strong>. Sistem ini menumbuhkan motivasi dan partisipasi aktif dalam kegiatan monitoring ekosistem.</p>
+  </div>
+
+  <!-- Slide 4 -->
+  <div class="slide">
+    <img src="https://cdn-icons-png.flaticon.com/512/3063/3063828.png" alt="Sustainability Icon">
+    <h1>Tujuan dan Manfaat</h1>
+    <p>Montana AI meningkatkan efisiensi, akurasi, dan transparansi kegiatan penanaman serta pemeliharaan tanaman. Aplikasi ini mendukung pengambilan keputusan berbasis data dan menjadi langkah strategis menuju transformasi digital kehutanan berkelanjutan.</p>
+  </div>
+
+  <!-- Slide 5 -->
+  <div class="slide">
+    <img src="https://cdn-icons-png.flaticon.com/512/1995/1995528.png" alt="Excellence Icon">
+    <h1>Keunggulan Montana AI</h1>
+    <p> 1. Integrasi AI, GIS, dan data real-time<br>
+        2. Prediksi cuaca & analisis lokasi<br>
+        3. Whatapss Chatbot pintar untuk laporan otomatis<br>
+        4. Dashboard interaktif & intuitif<br>
+        5. Dengan Fitur Keamanan ganda data perusahaan terjaga <br>
+        6. Kolaborasi lintas unit kerja dengan antarmuka ramah pengguna.</p>
+  </div>
+
+  <!-- Navigasi utama -->
+  <div class="nav-buttons">
+    <button class="btn" id="prevBtn">← Sebelumnya</button>
+    <button class="btn" id="nextBtn">Selanjutnya →</button>
+  </div>
+
+  <div class="indicator">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
 
 <script>
-// Pastikan Font Awesome CSS dimuat, menggunakan versi 6 yang lebih baru
-// const faScript = document.createElement('script');
-// faScript.src = "https://kit.fontawesome.com/a076d05399.js"; // Ganti dengan link Font Awesome kit Anda jika ada
-// faScript.crossOrigin = "anonymous";
-// document.head.appendChild(faScript);
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+let slideIndex = 0;
 
-let startTime = localStorage.getItem("startTime");
-if (!startTime) {
-  startTime = Date.now();
-  localStorage.setItem("startTime", startTime);
+function showSlide(i) {
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+  slides[i].classList.add('active');
+  dots[i].classList.add('active');
+  slideIndex = i;
 }
 
-const levelThresholds = {
-  "Tumbuhan Bawah": { minMinutes: 0, maxMinutes: 9, icon: "fas fa-seedling" },
-  "Semai": { minMinutes: 10, maxMinutes: 29, icon: "fas fa-leaf" },
-  "Pancang": { minMinutes: 30, maxMinutes: 59, icon: "fas fa-tree" },
-  "Tiang": { minMinutes: 60, maxMinutes: 119, icon: "fas fa-tree-deciduous" }, // Menggunakan ikon yang sedikit berbeda
-  "Pohon": { minMinutes: 120, maxMinutes: Infinity, icon: "fas fa-mountain" }
-};
-
-function formatTime(minutes) {
-    const totalSeconds = minutes * 60;
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const mins = Math.floor((totalSeconds % 3600) / 60);
-    const secs = totalSeconds % 60;
-    
-    let parts = [];
-    if (days > 0) parts.push(`${days} hari`);
-    if (hours > 0) parts.push(`${hours} jam`);
-    if (mins > 0) parts.push(`${mins} menit`);
-    if (parts.length === 0 || (parts.length === 1 && mins === 0 && secs > 0)) parts.push(`${secs} detik`); // Jika hanya detik
-    
-    return parts.join(', ');
-}
-
-
-function updateActiveTime() {
-  const now = Date.now();
-  const elapsed = Math.floor((now - startTime) / 1000); // dalam detik
-  const days = Math.floor(elapsed / 86400);
-  const hours = Math.floor((elapsed % 86400) / 3600);
-  const minutes = Math.floor((elapsed % 3600) / 60);
-  const seconds = elapsed % 60;
-
-  document.getElementById("activeTime").textContent =
-    `Waktu Aktif: ${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik`;
-
-  const progressValue = Math.min(minutes, 120);
-  document.getElementById("progressBar").value = progressValue;
-
-  let currentLevel = "Tumbuhan Bawah";
-  if (minutes >= 120) currentLevel = "Pohon";
-  else if (minutes >= 60) currentLevel = "Tiang";
-  else if (minutes >= 30) currentLevel = "Pancang";
-  else if (minutes >= 10) currentLevel = "Semai";
-
-  document.getElementById("levelBadge").textContent = currentLevel;
-
-  // Update deskripsi waktu untuk setiap level item
-  document.getElementById("levelTumbuhanBawah").querySelector(".level-time-desc").textContent = `< 10 menit (Anda ${minutes} menit di level ini)`;
-  if (currentLevel === "Tumbuhan Bawah" && minutes < levelThresholds["Semai"].minMinutes) {
-    const remaining = levelThresholds["Semai"].minMinutes - minutes;
-    document.getElementById("levelTumbuhanBawah").querySelector(".level-time-desc").textContent = `< 10 menit (${remaining} menit lagi ke Semai)`;
-  } else if (currentLevel !== "Tumbuhan Bawah") {
-    document.getElementById("levelTumbuhanBawah").querySelector(".level-time-desc").textContent = `< 10 menit (Telah terlewati)`;
-  }
-
-  if (minutes >= levelThresholds["Semai"].minMinutes && minutes < levelThresholds["Pancang"].minMinutes) {
-    const remaining = levelThresholds["Pancang"].minMinutes - minutes;
-    document.getElementById("levelSemai").querySelector(".level-time-desc").textContent = `≥ 10 menit (${remaining} menit lagi ke Pancang)`;
-  } else if (minutes < levelThresholds["Semai"].minMinutes) {
-    document.getElementById("levelSemai").querySelector(".level-time-desc").textContent = `≥ 10 menit`;
-  } else {
-    document.getElementById("levelSemai").querySelector(".level-time-desc").textContent = `≥ 10 menit (Telah terlewati)`;
-  }
-  
-  if (minutes >= levelThresholds["Pancang"].minMinutes && minutes < levelThresholds["Tiang"].minMinutes) {
-    const remaining = levelThresholds["Tiang"].minMinutes - minutes;
-    document.getElementById("levelPancang").querySelector(".level-time-desc").textContent = `≥ 30 menit (${remaining} menit lagi ke Tiang)`;
-  } else if (minutes < levelThresholds["Pancang"].minMinutes) {
-    document.getElementById("levelPancang").querySelector(".level-time-desc").textContent = `≥ 30 menit`;
-  } else {
-    document.getElementById("levelPancang").querySelector(".level-time-desc").textContent = `≥ 30 menit (Telah terlewati)`;
-  }
-
-  if (minutes >= levelThresholds["Tiang"].minMinutes && minutes < levelThresholds["Pohon"].minMinutes) {
-    const remaining = levelThresholds["Pohon"].minMinutes - minutes;
-    document.getElementById("levelTiang").querySelector(".level-time-desc").textContent = `≥ 60 menit (${remaining} menit lagi ke Pohon)`;
-  } else if (minutes < levelThresholds["Tiang"].minMinutes) {
-    document.getElementById("levelTiang").querySelector(".level-time-desc").textContent = `≥ 60 menit`;
-  } else {
-    document.getElementById("levelTiang").querySelector(".level-time-desc").textContent = `≥ 60 menit (Telah terlewati)`;
-  }
-
-  if (minutes >= levelThresholds["Pohon"].minMinutes) {
-    document.getElementById("levelPohon").querySelector(".level-time-desc").textContent = `≥ 120 menit (Anda di level tertinggi!)`;
-  } else {
-    document.getElementById("levelPohon").querySelector(".level-time-desc").textContent = `≥ 120 menit`;
-  }
-
-
-  // Menyoroti level saat ini
-  document.querySelectorAll('.level-item').forEach(item => {
-    item.style.backgroundColor = '#f0fdf4'; // Reset warna
-    item.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
-  });
-
-  const activeLevelElement = document.getElementById(`level${currentLevel.replace(/\s/g, '')}`);
-  if (activeLevelElement) {
-    activeLevelElement.style.backgroundColor = '#d8f3e2'; // Warna latar yang menyorot
-    activeLevelElement.style.boxShadow = '0 4px 10px rgba(64,145,108,0.2)';
-  }
-}
-
-setInterval(updateActiveTime, 1000);
-
-function saveProfile() {
-  const name = document.getElementById("name").value;
-  const role = document.getElementById("role").value;
-  const email = document.getElementById("email").value;
-  const phone = document.getElementById("phone").value;
-  
-  const data = { name, role, email, phone };
-  localStorage.setItem("profileData", JSON.stringify(data));
-
-  // Update tampilan nama dan jabatan di profil
-  document.getElementById("profileName").textContent = name || "Nama Pengguna";
-  document.getElementById("profileRole").textContent = role || "Jabatan Pengguna";
-  
-  alert("Profil berhasil disimpan 🌿");
-}
-
-function loadProfile() {
-  const savedData = JSON.parse(localStorage.getItem("profileData") || "{}");
-  document.getElementById("name").value = savedData.name || "";
-  document.getElementById("role").value = savedData.role || "";
-  document.getElementById("email").value = savedData.email || "";
-  document.getElementById("phone").value = savedData.phone || "";
-
-  document.getElementById("profileName").textContent = savedData.name || "Nama Pengguna";
-  document.getElementById("profileRole").textContent = savedData.role || "Jabatan Pengguna";
-
-  const savedPhoto = localStorage.getItem("profilePic");
-  if (savedPhoto) document.getElementById("profilePic").src = savedPhoto;
-}
-
-document.getElementById("photoUpload").addEventListener("change", e => {
-  const file = e.target.files[0];
-  const reader = new FileReader();
-  reader.onload = () => {
-    document.getElementById("profilePic").src = reader.result;
-    localStorage.setItem("profilePic", reader.result);
-  };
-  if (file) reader.readAsDataURL(file);
+document.getElementById('nextBtn').addEventListener('click', () => {
+  slideIndex = (slideIndex + 1) % slides.length;
+  showSlide(slideIndex);
 });
 
-// Fungsi untuk toggle dropdown edit section
-function toggleEditSection() {
-  const editSection = document.getElementById('editProfileSection');
-  const toggleButton = document.querySelector('.edit-dropdown-toggle');
-  editSection.classList.toggle('active');
-  toggleButton.classList.toggle('active');
+document.getElementById('prevBtn').addEventListener('click', () => {
+  slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+  showSlide(slideIndex);
+});
+
+dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+
+// ⏩ percepat rotasi jadi 6 detik
+setInterval(() => {
+  slideIndex = (slideIndex + 1) % slides.length;
+  showSlide(slideIndex);
+}, 6000);
+
+// ====== Fitur Carousel di Slide 2 ======
+const featureCards = document.querySelectorAll('.feature-card');
+let featureIndex = 0;
+
+function showFeature(i) {
+  featureCards.forEach(c => c.classList.remove('active'));
+  featureCards[i].classList.add('active');
+  featureIndex = i;
 }
 
-// Panggil fungsi saat halaman dimuat
-loadProfile();
-updateActiveTime();
+document.getElementById('nextFeature').addEventListener('click', () => {
+  featureIndex = (featureIndex + 1) % featureCards.length;
+  showFeature(featureIndex);
+});
+
+document.getElementById('prevFeature').addEventListener('click', () => {
+  featureIndex = (featureIndex - 1 + featureCards.length) % featureCards.length;
+  showFeature(featureIndex);
+});
 </script>
 </body>
 </html>
