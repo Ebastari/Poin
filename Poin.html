@@ -1,329 +1,249 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Montana AI – Smart Land Reclamation</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-<style>
-:root {
-  --primary-green: #4CAF50;
-  --dark-green: #388E3C;
-  --light-green: #E8F5E9;
-  --accent-green: #66BB6A;
-  --text-dark: #1B1B1B;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Montana AI – Smart Land Reclamation (Interaktif)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --dark: #388E3C;
+      --light: #E8F5E9;
+      --bg: #f5f5f5;
+      --text: #1B1B1B;
+    }
 
-body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  overflow: hidden;
-  background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: var(--text-dark);
-}
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-.slider-container {
-  position: relative;
-  width: 90%;
-  max-width: 950px;
-  height: 90vh;
-  overflow: hidden;
-  border-radius: 25px;
-  background: #fff;
-  box-shadow: 0 15px 45px rgba(0,0,0,0.3);
-}
+    .container {
+      background: #fff;
+      border-radius: 25px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 900px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
 
-.slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transform: translateX(100%);
-  transition: opacity 1s ease, transform 1s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 40px;
-  background: linear-gradient(120deg, var(--light-green), #f5fff5);
-}
+    .header {
+      text-align: center;
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+    }
 
-.slide.active {
-  opacity: 1;
-  transform: translateX(0);
-  z-index: 2;
-}
+    .header h1 {
+      color: var(--dark);
+      font-size: 1.6em;
+      margin-bottom: 5px;
+    }
 
-.slide img {
-  max-width: 180px;
-  margin-bottom: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
+    .header p {
+      color: #555;
+      font-size: 0.95em;
+    }
 
-h1 {
-  color: var(--dark-green);
-  font-size: 2em;
-  margin-bottom: 10px;
-}
+    .body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 30px;
+      gap: 20px;
+    }
 
-p {
-  max-width: 750px;
-  font-size: 1.05em;
-  line-height: 1.6em;
-  color: #333;
-}
+    .robot {
+      width: 140px;
+      height: 140px;
+      flex-shrink: 0;
+      animation: float 3s ease-in-out infinite;
+    }
 
-.nav-buttons {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 30px;
-}
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
 
-.btn {
-  background-color: var(--primary-green);
-  border: none;
-  padding: 10px 18px;
-  color: white;
-  font-weight: 600;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+    .chat {
+      background: var(--light);
+      border-radius: 15px;
+      padding: 20px;
+      flex: 1;
+      min-height: 160px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      position: relative;
+      font-size: 1em;
+      line-height: 1.6;
+    }
 
-.btn:hover { background-color: var(--dark-green); transform: scale(1.05); }
+    .chat::after {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 25px;
+      border-width: 10px;
+      border-style: solid;
+      border-color: transparent var(--light) transparent transparent;
+    }
 
-.indicator {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-}
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 25px;
+      border-top: 1px solid #eee;
+    }
 
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: #c8e6c9;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-.dot.active {
-  background-color: var(--dark-green);
-  transform: scale(1.2);
-}
+    .btn:hover { background: var(--dark); transform: scale(1.05); }
 
-/* ===== Kartu fitur di slide kedua ===== */
-.feature-card {
-  width: 90%;
-  max-width: 600px;
-  background: #fff;
-  border-radius: 20px;
-  padding: 25px 20px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: left;
-  animation: fadeIn 0.8s ease;
-}
+    .progress {
+      font-size: 0.9em;
+      color: #777;
+    }
 
-.feature-card.active {
-  display: flex;
-}
+    .typing {
+      border-right: 2px solid rgba(0,0,0,0.4);
+      white-space: pre-wrap;
+    }
 
-.feature-card img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  margin-bottom: 15px;
-}
-
-.feature-card h2 {
-  color: var(--dark-green);
-  font-size: 1.3em;
-  margin-bottom: 8px;
-  text-align: center;
-}
-
-.feature-card p {
-  color: #333;
-  font-size: 1em;
-  line-height: 1.5em;
-}
-
-.feature-nav {
-  margin-top: 25px;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-</style>
+    .feature-img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      display: block;
+      margin: 15px auto;
+      border-radius: 12px;
+    }
+  </style>
 </head>
 <body>
-
-<div class="slider-container" id="slider">
-
-  <!-- Slide 1 -->
-  <div class="slide active">
-    <img src="https://cdn-icons-png.flaticon.com/512/2721/2721298.png" alt="AI Plant Icon">
-    <h1>Montana AI</h1>
-    <p><strong>Artificial Intelligence for Smart Land Reclamation</strong> – platform digital cerdas untuk mendukung pengelolaan nursery, pemantauan tanaman, dan reklamasi lahan berbasis data secara real-time.</p>
-  </div>
-
-  <!-- Slide 2 (Fitur & Fungsi) -->
-  <div class="slide">
-    <h1>Fungsi dan Fitur Utama</h1>
-    <div class="feature-card active">
-      <img src="https://cdn-icons-png.flaticon.com/512/2909/2909758.png" alt="Manajemen Bibit">
-      <h2>Manajemen Bibit Terpadu</h2>
-      <p>Mengelola data bibit, stok, dan distribusi secara otomatis melalui integrasi dengan <strong>AppSheet</strong> dan <strong>Google Sheets</strong>, memastikan efisiensi data dan keakuratan realisasi di lapangan.</p>
+  <div class="container">
+    <div class="header">
+      <h1>Montana AI – Smart Land Reclamation</h1>
+      <p>Panduan interaktif bersama Montana 🤖</p>
     </div>
 
-    <div class="feature-card">
-      <img src="https://cdn-icons-png.flaticon.com/512/4272/4272781.png" alt="Pemantauan Kondisi">
-      <h2>Pemantauan Kondisi Tanaman</h2>
-      <p>Memberikan data visual dan numerik terkait pertumbuhan tanaman melalui <strong>kamera analisis Montana V2</strong> serta sensor pengukur tinggi otomatis untuk akurasi tinggi di lapangan.</p>
+    <div class="body">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Robot AI" class="robot">
+      <div class="chat" id="chat"></div>
     </div>
 
-    <div class="feature-card">
-      <img src="https://cdn-icons-png.flaticon.com/512/2038/2038874.png" alt="Analisis Daun AI">
-      <h2>Analisis Kesehatan Daun Berbasis AI</h2>
-      <p>Menggunakan teknologi <em>image recognition</em> untuk mendeteksi tingkat kesehatan daun secara cepat, mendukung pengambilan keputusan terhadap tindakan pemeliharaan tanaman.</p>
-    </div>
-
-    <div class="feature-card">
-      <img src="https://cdn-icons-png.flaticon.com/512/6062/6062646.png" alt="Chatbot AI">
-      <h2>Pelaporan Digital dan Chatbot AI</h2>
-      <p><strong>Chatbot Montana AI</strong> bertindak sebagai asisten cerdas yang mampu memberikan laporan harian, menjawab pertanyaan pengguna, dan memberikan rekomendasi berbasis data.</p>
-    </div>
-
-    <div class="feature-card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3462/3462637.png" alt="Geospasial Cuaca">
-      <h2>Integrasi Geospasial dan Cuaca</h2>
-      <p>Menghubungkan <strong>peta rencana penanaman (Google Earth)</strong>, data realisasi (<strong>ArcGIS</strong>), dan prakiraan cuaca (<strong>MSN Weather</strong>) untuk mendukung keputusan lapangan berbasis lokasi aktual.</p>
-    </div>
-
-    <div class="feature-card">
-      <img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png" alt="Logbook">
-      <h2>Logbook Digital dan Dokumen Pendukung</h2>
-      <p>Menyediakan akses cepat terhadap <strong>Logbook Bibit</strong>, <strong>Logbook Pestisida</strong>, dan <strong>Dokumen RR</strong> dalam format digital untuk memperkuat dokumentasi dan transparansi.</p>
-    </div>
-
-    <!-- Tombol dalam kartu -->
-    <div class="feature-nav">
-      <button class="btn" id="prevFeature">← Sebelumnya</button>
-      <button class="btn" id="nextFeature">Selanjutnya →</button>
+    <div class="controls">
+      <div class="progress" id="progress">Langkah 0 dari 12</div>
+      <div>
+        <button class="btn" id="skip">Lewati</button>
+        <button class="btn" id="next" disabled>Lanjut</button>
+      </div>
     </div>
   </div>
 
-  <!-- Slide 3 -->
-  <div class="slide">
-    <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" alt="User Level Icon">
-    <h1>Sistem Keaktifan Pengguna</h1>
-    <p>Aktivitas pengguna menambah poin dan meningkatkan level pertumbuhan dari <strong>Semai → Pancang → Tiang → Pohon → Rimba</strong>. Sistem ini menumbuhkan motivasi dan partisipasi aktif dalam kegiatan monitoring ekosistem.</p>
-  </div>
+  <script>
+    const chat = document.getElementById('chat');
+    const nextBtn = document.getElementById('next');
+    const skipBtn = document.getElementById('skip');
+    const progress = document.getElementById('progress');
 
-  <!-- Slide 4 -->
-  <div class="slide">
-    <img src="https://cdn-icons-png.flaticon.com/512/3063/3063828.png" alt="Sustainability Icon">
-    <h1>Tujuan dan Manfaat</h1>
-    <p>Montana AI meningkatkan efisiensi, akurasi, dan transparansi kegiatan penanaman serta pemeliharaan tanaman. Aplikasi ini mendukung pengambilan keputusan berbasis data dan menjadi langkah strategis menuju transformasi digital kehutanan berkelanjutan.</p>
-  </div>
+    // === Percakapan Gabungan dengan isi dari kode slider ===
+    const steps = [
+      "Halo 👋, saya Montana — asisten AI yang akan menuntun kamu mengenal sistem Montana AI.",
+      "Montana AI adalah platform digital cerdas yang mendukung pengelolaan nursery, pemantauan tanaman, dan reklamasi lahan berbasis data real-time.",
+      "Pertama, sistem ini memiliki fitur *Manajemen Bibit Terpadu*. Semua data stok, bibit, dan distribusi terhubung otomatis dengan AppSheet dan Google Sheets untuk memastikan keakuratan data 🌱",
+      "Kedua, Montana AI bisa melakukan *Pemantauan Kondisi Tanaman* menggunakan kamera Montana V2 dan sensor tinggi otomatis — memberikan data pertumbuhan secara akurat dan visual 📸",
+      "Selanjutnya, ada *Analisis Kesehatan Daun Berbasis AI*. Teknologi image recognition membantu mendeteksi daun yang tidak sehat dan memberikan rekomendasi tindakan perawatan 🍃",
+      "Kemudian, sistem *Pelaporan Digital & Chatbot AI* memungkinkan kamu membuat laporan harian dan menanyakan informasi kapan pun secara otomatis 🗒️",
+      "Kami juga menyediakan *Integrasi Geospasial dan Cuaca* — menghubungkan peta dari Google Earth, data realisasi dari ArcGIS, dan prakiraan cuaca dari MSN Weather ☁️",
+      "Tak ketinggalan, ada *Logbook Digital & Dokumen Pendukung* seperti Logbook Bibit, Logbook Pestisida, dan dokumen RR dalam format digital 📚",
+      "Untuk meningkatkan partisipasi, Montana AI punya sistem level pengguna — dari Semai → Pancang → Tiang → Pohon → Rimba 🌳",
+      "Tujuan utama kami adalah meningkatkan efisiensi, akurasi, dan transparansi dalam kegiatan penanaman serta pemeliharaan tanaman.",
+      "Keunggulan Montana AI: integrasi AI + GIS + real-time data, prediksi cuaca, chatbot WhatsApp, dashboard interaktif, keamanan data ganda, dan antarmuka ramah pengguna 💡",
+      "Terima kasih telah mengikuti panduan ini! Sekarang kamu siap menjelajahi aplikasi Montana AI dan mulai petualangan digitalmu 🚀"
+    ];
 
-  <!-- Slide 5 -->
-  <div class="slide">
-    <img src="https://cdn-icons-png.flaticon.com/512/1995/1995528.png" alt="Excellence Icon">
-    <h1>Keunggulan Montana AI</h1>
-    <p> 1. Integrasi AI, GIS, dan data real-time<br>
-        2. Prediksi cuaca & analisis lokasi<br>
-        3. Whatapss Chatbot pintar untuk laporan otomatis<br>
-        4. Dashboard interaktif & intuitif<br>
-        5. Dengan Fitur Keamanan ganda data perusahaan terjaga <br>
-        6. Kolaborasi lintas unit kerja dengan antarmuka ramah pengguna.</p>
-  </div>
+    let index = 0;
+    let typing = false;
 
-  <!-- Navigasi utama -->
-  <div class="nav-buttons">
-    <button class="btn" id="prevBtn">← Sebelumnya</button>
-    <button class="btn" id="nextBtn">Selanjutnya →</button>
-  </div>
+    function typeText(text) {
+      chat.innerHTML = '';
+      const span = document.createElement('span');
+      span.className = 'typing';
+      chat.appendChild(span);
+      let i = 0;
+      typing = true;
 
-  <div class="indicator">
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-  </div>
-</div>
+      const interval = setInterval(() => {
+        span.textContent += text.charAt(i);
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          span.classList.remove('typing');
+          typing = false;
+          nextBtn.disabled = false;
+          speakText(text);
+        }
+      }, 25);
+    }
 
-<script>
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-let slideIndex = 0;
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'id-ID';
+        utter.rate = 1;
+        utter.pitch = 1;
+        window.speechSynthesis.speak(utter);
+      }
+    }
 
-function showSlide(i) {
-  slides.forEach(s => s.classList.remove('active'));
-  dots.forEach(d => d.classList.remove('active'));
-  slides[i].classList.add('active');
-  dots[i].classList.add('active');
-  slideIndex = i;
-}
+    function nextStep() {
+      if (typing) return;
+      if (index < steps.length) {
+        typeText(steps[index]);
+        progress.textContent = `Langkah ${index + 1} dari ${steps.length}`;
+        index++;
+        nextBtn.disabled = true;
+      } else {
+        chat.innerHTML = '🎉 Terima kasih! Kamu telah mengenal seluruh fitur Montana AI. Mari mulai menggunakan aplikasinya!';
+        speakText('Terima kasih! Kamu telah mengenal seluruh fitur Montana AI. Mari mulai menggunakan aplikasinya!');
+        nextBtn.style.display = 'none';
+        skipBtn.textContent = "Mulai Aplikasi";
+      }
+    }
 
-document.getElementById('nextBtn').addEventListener('click', () => {
-  slideIndex = (slideIndex + 1) % slides.length;
-  showSlide(slideIndex);
-});
+    nextBtn.addEventListener('click', nextStep);
 
-document.getElementById('prevBtn').addEventListener('click', () => {
-  slideIndex = (slideIndex - 1 + slides.length) % slides.length;
-  showSlide(slideIndex);
-});
+    skipBtn.addEventListener('click', () => {
+      window.speechSynthesis.cancel();
+      chat.innerHTML = 'Mengalihkan ke aplikasi utama Montana AI... 👋';
+      progress.textContent = 'Mengalihkan...';
+      setTimeout(() => {
+        window.location.href = "https://ebastari.github.io/dasboard-AI/testdas45.html";
+      }, 1500);
+    });
 
-dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
-
-// ⏩ percepat rotasi jadi 6 detik
-setInterval(() => {
-  slideIndex = (slideIndex + 1) % slides.length;
-  showSlide(slideIndex);
-}, 6000);
-
-// ====== Fitur Carousel di Slide 2 ======
-const featureCards = document.querySelectorAll('.feature-card');
-let featureIndex = 0;
-
-function showFeature(i) {
-  featureCards.forEach(c => c.classList.remove('active'));
-  featureCards[i].classList.add('active');
-  featureIndex = i;
-}
-
-document.getElementById('nextFeature').addEventListener('click', () => {
-  featureIndex = (featureIndex + 1) % featureCards.length;
-  showFeature(featureIndex);
-});
-
-document.getElementById('prevFeature').addEventListener('click', () => {
-  featureIndex = (featureIndex - 1 + featureCards.length) % featureCards.length;
-  showFeature(featureIndex);
-});
-</script>
+    // Auto mulai setelah 1 detik
+    setTimeout(() => nextStep(), 800);
+  </script>
 </body>
 </html>
