@@ -22,50 +22,57 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 10px;
+      box-sizing: border-box;
     }
 
     .container {
       background: #fff;
       border-radius: 25px;
       box-shadow: 0 12px 35px rgba(0,0,0,0.1);
-      width: 90%;
+      width: 100%;
       max-width: 900px;
-      height: 90vh;
       display: flex;
       flex-direction: column;
+      height: 90vh;
+      max-height: 800px;
       overflow: hidden;
       position: relative;
     }
 
     .header {
       text-align: center;
-      padding: 20px;
+      padding: 15px;
       border-bottom: 1px solid #eee;
+      flex-shrink: 0;
     }
 
     .header h1 {
       color: var(--dark);
-      font-size: 1.6em;
+      font-size: 1.4em;
       margin-bottom: 5px;
     }
 
     .header p {
       color: #555;
-      font-size: 0.95em;
+      font-size: 0.9em;
     }
 
     .body {
       flex: 1;
       display: flex;
-      align-items: center;
-      padding: 30px;
-      gap: 20px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 20px;
+      gap: 15px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
     }
 
     .robot {
-      width: 140px;
-      height: 140px;
+      width: 110px;
+      height: 110px;
       flex-shrink: 0;
       animation: float 3s ease-in-out infinite;
     }
@@ -78,13 +85,15 @@
     .chat {
       background: var(--light);
       border-radius: 15px;
-      padding: 20px;
+      padding: 15px;
       flex: 1;
-      min-height: 160px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.05);
       position: relative;
       font-size: 1em;
       line-height: 1.6;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
     }
 
     .chat::after {
@@ -101,8 +110,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 25px;
+      padding: 10px 20px;
       border-top: 1px solid #eee;
+      background: #fff;
+      flex-shrink: 0;
     }
 
     .btn {
@@ -110,7 +121,7 @@
       color: white;
       border: none;
       border-radius: 10px;
-      padding: 10px 16px;
+      padding: 10px 14px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -119,7 +130,7 @@
     .btn:hover { background: var(--dark); transform: scale(1.05); }
 
     .progress {
-      font-size: 0.9em;
+      font-size: 0.85em;
       color: #777;
     }
 
@@ -128,13 +139,23 @@
       white-space: pre-wrap;
     }
 
-    .feature-img {
-      width: 100px;
-      height: 100px;
-      object-fit: contain;
-      display: block;
-      margin: 15px auto;
-      border-radius: 12px;
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .body {
+        flex-direction: column;
+        align-items: center;
+      }
+      .robot {
+        width: 80px;
+        height: 80px;
+      }
+      .chat {
+        font-size: 0.95em;
+        width: 100%;
+      }
+      .header h1 {
+        font-size: 1.2em;
+      }
     }
   </style>
 </head>
@@ -145,7 +166,7 @@
       <p>Panduan interaktif bersama Montana 🤖</p>
     </div>
 
-    <div class="body">
+    <div class="body" id="body">
       <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Robot AI" class="robot">
       <div class="chat" id="chat"></div>
     </div>
@@ -164,18 +185,18 @@
     const nextBtn = document.getElementById('next');
     const skipBtn = document.getElementById('skip');
     const progress = document.getElementById('progress');
+    const body = document.getElementById('body');
 
-    // === Percakapan Gabungan dengan isi dari kode slider ===
     const steps = [
       "Halo 👋, saya Montana — asisten AI yang akan menuntun kamu mengenal sistem Montana AI.",
       "Montana AI adalah platform digital cerdas yang mendukung pengelolaan nursery, pemantauan tanaman, dan reklamasi lahan berbasis data real-time.",
-      "Pertama, sistem ini memiliki fitur *Manajemen Bibit Terpadu*. Semua data stok, bibit, dan distribusi terhubung otomatis dengan AppSheet dan Google Sheets untuk memastikan keakuratan data 🌱",
-      "Kedua, Montana AI bisa melakukan *Pemantauan Kondisi Tanaman* menggunakan kamera Montana V2 dan sensor tinggi otomatis — memberikan data pertumbuhan secara akurat dan visual 📸",
-      "Selanjutnya, ada *Analisis Kesehatan Daun Berbasis AI*. Teknologi image recognition membantu mendeteksi daun yang tidak sehat dan memberikan rekomendasi tindakan perawatan 🍃",
-      "Kemudian, sistem *Pelaporan Digital & Chatbot AI* memungkinkan kamu membuat laporan harian dan menanyakan informasi kapan pun secara otomatis 🗒️",
-      "Kami juga menyediakan *Integrasi Geospasial dan Cuaca* — menghubungkan peta dari Google Earth, data realisasi dari ArcGIS, dan prakiraan cuaca dari MSN Weather ☁️",
-      "Tak ketinggalan, ada *Logbook Digital & Dokumen Pendukung* seperti Logbook Bibit, Logbook Pestisida, dan dokumen RR dalam format digital 📚",
-      "Untuk meningkatkan partisipasi, Montana AI punya sistem level pengguna — dari Semai → Pancang → Tiang → Pohon → Rimba 🌳",
+      "Pertama, sistem ini memiliki fitur Manajemen Bibit Terpadu. Semua data stok, bibit, dan distribusi terhubung otomatis dengan AppSheet dan Google Sheets untuk memastikan keakuratan data 🌱",
+      "Kedua, Montana AI bisa melakukan Pemantauan Kondisi Tanaman menggunakan kamera Montana V2 dan sensor tinggi otomatis — memberikan data pertumbuhan secara akurat dan visual 📸",
+      "Selanjutnya, ada Analisis Kesehatan Daun Berbasis AI. Teknologi image recognition membantu mendeteksi daun yang tidak sehat dan memberikan rekomendasi tindakan perawatan 🍃",
+      "Kemudian, sistem Pelaporan Digital & Chatbot AI memungkinkan kamu membuat laporan harian dan menanyakan informasi kapan pun secara otomatis ",
+      "Kami juga menyediakan Integrasi Geospasial dan Cuaca — menghubungkan peta dari Google Earth, data realisasi dari ArcGIS, dan prakiraan cuaca dari MSN Weather ☁️",
+      "Tak ketinggalan, ada Logbook Digital & Dokumen Pendukung* seperti Logbook Bibit, Logbook Pestisida, dan dokumen RR dalam format digital ",
+      "Untuk meningkatkan partisipasi, Montana AI punya sistem level pengguna — dari Semai → Pancang → Tiang → Pohon → Rimba ",
       "Tujuan utama kami adalah meningkatkan efisiensi, akurasi, dan transparansi dalam kegiatan penanaman serta pemeliharaan tanaman.",
       "Keunggulan Montana AI: integrasi AI + GIS + real-time data, prediksi cuaca, chatbot WhatsApp, dashboard interaktif, keamanan data ganda, dan antarmuka ramah pengguna 💡",
       "Terima kasih telah mengikuti panduan ini! Sekarang kamu siap menjelajahi aplikasi Montana AI dan mulai petualangan digitalmu 🚀"
@@ -195,6 +216,7 @@
       const interval = setInterval(() => {
         span.textContent += text.charAt(i);
         i++;
+        body.scrollTop = body.scrollHeight; // scroll otomatis
         if (i >= text.length) {
           clearInterval(interval);
           span.classList.remove('typing');
@@ -242,9 +264,7 @@
       }, 1500);
     });
 
-    // Auto mulai setelah 1 detik
     setTimeout(() => nextStep(), 800);
   </script>
 </body>
 </html>
-
